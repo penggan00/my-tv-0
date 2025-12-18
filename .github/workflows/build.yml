@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -27,7 +28,7 @@ jobs:
         run: ./gradlew clean assembleRelease
 
       - name: Create Release
-        id: create_release
+        if: github.event_name == 'push'
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
